@@ -9,12 +9,15 @@ export const TodoForm = () => {
   const [task, setTask] = useState("");
 
   const handleAddTodo = () => {
+    const allIds = todos.map((todoItem) => todoItem.id);
+    const highestId = Math.max(...allIds);
     const updatedTodos = [
       ...todos,
-      { id: todos.length, label: task, checked: false },
+      { id: highestId + 1, label: task, checked: false },
     ];
     setTodos(updatedTodos);
     setTask("");
+    console.log(updatedTodos);
   };
 
   const handleKeyUp = (e) => {
