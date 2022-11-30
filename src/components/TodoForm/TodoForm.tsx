@@ -1,14 +1,20 @@
-import { useContext, useState } from 'react';
-import { todosContext } from '../../TodosContext';
+import React from "react";
+import { useContext, useState } from "react";
+import { todosContext } from "../../TodosContext";
 
-import './TodoForm.scss';
+import "./TodoForm.scss";
 
 export const TodoForm = () => {
   const { todos, setTodos } = useContext(todosContext);
-  const [task, setTask] = useState('');
+  const [task, setTask] = useState("");
 
   const handleAddTodo = () => {
-    // Fin an ability to add new task
+    const updatedTodos = [
+      ...todos,
+      { id: todos.length, label: task, checked: false },
+    ];
+    setTodos(updatedTodos);
+    setTask("");
   };
 
   const handleKeyUp = (e) => {

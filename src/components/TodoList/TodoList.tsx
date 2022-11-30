@@ -1,17 +1,28 @@
-import { useContext } from 'react';
-import { todosContext } from '../../TodosContext';
-import Checkbox from '../Checkbox/Checkbox';
-import './TodoList.scss';
+import React from "react";
+import { useContext } from "react";
+import { todosContext } from "../../TodosContext";
+import Checkbox from "../Checkbox/Checkbox";
+import "./TodoList.scss";
+
+export type TodoList = {
+  id: number;
+  label: string;
+  checked: boolean;
+};
 
 export const TodoList = () => {
   const { todos, setTodos } = useContext(todosContext);
 
-  const handleDelete = (id) => {
-    // Fix an ability to delete task
+  const handleDelete = (id: number) => {
+    const updatedTodos = todos.filter((todo) => todo.id !== id);
+    setTodos(updatedTodos);
   };
 
   const toggleCheck = (id) => {
-    // Fix an ability to toggle task
+    const updatedTodos = todos.map((todo) =>
+      todo.id === id ? { ...todo, checked: !todo.checked } : todo
+    );
+    return setTodos(updatedTodos);
   };
 
   const handleKeyUp = (e, id) => {
@@ -19,7 +30,6 @@ export const TodoList = () => {
       toggleCheck(id);
     }
   };
-
 
   return (
     <div className="TodoList">
@@ -38,7 +48,9 @@ export const TodoList = () => {
           ))}
         </div>
       ) : (
-        <div className="TodoList__noTodos">Looks like you&apos;re absolutely free today!</div>
+        <div className="TodoList__noTodos">
+          Looks like you&apos;re absolutely free today!
+        </div>
       )}
     </div>
   );
